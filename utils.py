@@ -2,6 +2,9 @@
 Multiple utilities
 """
 import yt_dlp
+from mt3_utils import get_mt3_model, load_audio, save_seq_to_midi
+
+midi_transcriber = get_mt3_model()
 
 def youtube_ids(file_path="data/Youtube_ID.txt"):
     with open(file_path) as f:
@@ -76,6 +79,24 @@ def youtube_urls(file_path="data/Youtube_ID.txt"):
 #         self.to_screen('Doing stuff')
 #         return [], info
 
+class TranscribeMIDI(yt_dlp.postprocessor.PostProcessor):
+    def run(self, information):
+        information['ext'] = 'mid'
+        orig_path = information['filepath']
+
+        audio = load_audio(orig_path)
+
+        midi_like_sequence = midi_transcriber(audio)
+
+        orig_no_ext = ".".join(orig_path.split(".")[:-1])
+
+        target_path = orig_no_ext + ".mid"
+
+        save_seq_to_midi(midi_like_sequence, target_path)
+
+        return [target_path], information
+
+
 def download_video(youtube_url, output_dir="./data/videos"):
     ydl_opts = {
         'format': 'best',
@@ -105,6 +126,7 @@ def download_video(youtube_url, output_dir="./data/videos"):
     }
     print(ydl_opts)
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.add_post_processor(TranscribeMIDI)
         ydl.download([youtube_url])
 
 # def download_videos(urls):
