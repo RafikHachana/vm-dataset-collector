@@ -1,2 +1,4 @@
 venv
 __pycache__
+data/videos/*.mp3
+data/videos/*.mp4
