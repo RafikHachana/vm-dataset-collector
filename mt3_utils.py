@@ -45,8 +45,10 @@ def save_seq_to_midi(seq, target_path):
 
 
 def load_audio(path):
-  return note_seq.audio_io.wav_data_to_samples_librosa(
-    path, sample_rate=16000)
+  with open(path, mode='rb') as f:
+    result =  note_seq.audio_io.wav_data_to_samples_librosa(
+      f.read(), sample_rate=16000)
+  return result
 
 
 
