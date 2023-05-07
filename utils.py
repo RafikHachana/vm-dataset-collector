@@ -144,6 +144,7 @@ def download_video(youtube_url, output_dir="./data/videos"):
     print(ydl_opts)
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.add_post_processor(TranscribeMIDI())
+        ydl.add_post_processor(FigaroDescription())
         ydl.download([youtube_url])
 
 # def download_videos(urls):
