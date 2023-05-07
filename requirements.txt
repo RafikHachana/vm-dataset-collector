@@ -4,3 +4,4 @@ mutagen==1.46.0
 pycryptodomex==3.17
 websockets==11.0.1
 yt-dlp==2023.3.4
+pretty-midi==0.2.9
