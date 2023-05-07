@@ -251,7 +251,7 @@ MODEL = "mt3" #@param["ismir2021", "mt3"]
 #@markdown in fact completed, possibly due to a Colab UI bug.  If you're unsure,
 #@markdown try running the next cell.
 
-checkpoint_path = f'/content/vm-dataset-collector/mt3/checkpoints/{MODEL}/'
+checkpoint_path = f'/content/vm-dataset-collector/checkpoints/{MODEL}/'
 
 # load_gtag()
 
