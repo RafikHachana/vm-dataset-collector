@@ -11,7 +11,8 @@ pip install -r requirements.txt
 
 # install mt3
 # mkdir mt3
-git clone --branch=main https://github.com/magenta/mt3 
+git clone --branch=main https://github.com/magenta/mt3
+git clone https://github.com/RafikHachana/figaro
 # cd mt3
 # cd mt3 && 
 # mv mt3 mt3_tmp; pwd && mv mt3_tmp/* .; pwd && rm -r mt3_tmp

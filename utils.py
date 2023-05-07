@@ -3,6 +3,7 @@ Multiple utilities
 """
 import yt_dlp
 from mt3_utils import get_mt3_model, load_audio, save_seq_to_midi
+from figaro_utils import get_description_from_midi_path
 
 midi_transcriber = get_mt3_model()
 
@@ -93,6 +94,22 @@ class TranscribeMIDI(yt_dlp.postprocessor.PostProcessor):
         target_path = orig_no_ext + ".mid"
 
         save_seq_to_midi(midi_like_sequence, target_path)
+
+        return [target_path], information
+    
+class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
+    def run(self, information):
+        information['ext'] = 'desc'
+        orig_path = information['filepath']
+
+        description = get_description_from_midi_path(orig_path)
+
+        orig_no_ext = ".".join(orig_path.split(".")[:-1])
+
+        target_path = orig_no_ext + ".desc"
+
+        with open(target_path, 'a') as f:
+            f.write(description)
 
         return [target_path], information
 
