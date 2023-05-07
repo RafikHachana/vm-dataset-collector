@@ -95,6 +95,8 @@ class TranscribeMIDI(yt_dlp.postprocessor.PostProcessor):
 
         save_seq_to_midi(midi_like_sequence, target_path)
 
+        information['filepath'] = target_path
+
         return [target_path], information
     
 class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
@@ -112,6 +114,8 @@ class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
 
         with open(target_path, 'a') as f:
             f.write(description)
+
+        information['filepath'] = target_path
 
         return [target_path], information
 

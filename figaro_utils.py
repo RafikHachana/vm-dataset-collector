@@ -34,7 +34,7 @@ class Event(object):
 
 # parameters for input representation
 DEFAULT_POS_PER_QUARTER = 12
-DEFAULT_VELOCITY_BINS = np.linspace(0, 128, 32+1, dtype=np.int)
+# DEFAULT_VELOCITY_BINS = np.linspace(0, 128, 32+1, dtype=np.int)
 DEFAULT_DURATION_BINS = np.sort(np.concatenate([
   np.arange(1, 13), # smallest possible units up to 1 quarter
   np.arange(12, 24, 3)[1:], # 16th notes up to 1 bar
@@ -43,7 +43,7 @@ DEFAULT_DURATION_BINS = np.sort(np.concatenate([
   np.arange(48, 4*48, 12), # quarter notes up to 8 bars
   np.arange(4*48, 16*48+1, 24) # half notes up to 16 bars
 ]))
-DEFAULT_TEMPO_BINS = np.linspace(0, 240, 32+1, dtype=np.int)
+# DEFAULT_TEMPO_BINS = np.linspace(0, 240, 32+1, dtype=np.int)
 DEFAULT_NOTE_DENSITY_BINS = np.linspace(0, 12, 32+1)
 DEFAULT_MEAN_VELOCITY_BINS = np.linspace(0, 128, 32+1)
 DEFAULT_MEAN_PITCH_BINS = np.linspace(0, 128, 32+1)
@@ -536,4 +536,9 @@ class InputRepresentation():
 
 
 def get_description_from_midi_path(path):
-    return InputRepresentation(path).get_description()
+    return "\n".join(InputRepresentation(path).get_description())
+
+if __name__ == '__main__':
+  file_path = input('Enter the path to the MIDI file : ')
+
+  print(get_description_from_midi_path(file_path))
