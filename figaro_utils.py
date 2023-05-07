@@ -1,6 +1,6 @@
 import sys
 
-sys.path.append('figaro')
+sys.path.append('figaro/src')
 from datasets import MidiDataset
 
 
