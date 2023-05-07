@@ -65,8 +65,8 @@ class InferenceModel(object):
     else:
       raise ValueError('unknown model_type: %s' % model_type)
 
-    gin_files = ['/content/mt3/gin/model.gin',
-                 f'/content/mt3/gin/{model_type}.gin']
+    gin_files = ['/content/vm-dataset-collector/mt3/mt3/gin/model.gin',
+                 f'/content/vm-dataset-collector/mt3/mt3/gin/{model_type}.gin']
 
     self.batch_size = 8
     self.outputs_length = 1024
@@ -249,7 +249,7 @@ MODEL = "mt3" #@param["ismir2021", "mt3"]
 #@markdown in fact completed, possibly due to a Colab UI bug.  If you're unsure,
 #@markdown try running the next cell.
 
-checkpoint_path = f'/content/checkpoints/{MODEL}/'
+checkpoint_path = f'/content/vm-dataset-collector/mt3/checkpoints/{MODEL}/'
 
 # load_gtag()
 
