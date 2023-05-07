@@ -104,6 +104,8 @@ class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
 
         description = get_description_from_midi_path(orig_path)
 
+        print('FIGARO DESCRIPTION', description)
+
         orig_no_ext = ".".join(orig_path.split(".")[:-1])
 
         target_path = orig_no_ext + ".desc"
