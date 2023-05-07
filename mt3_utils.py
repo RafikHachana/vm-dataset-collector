@@ -15,13 +15,13 @@ import seqio
 import t5
 import t5x
 
-from mt3 import metrics_utils
-from mt3 import models
-from mt3 import network
-from mt3 import note_sequences
-from mt3 import preprocessors
-from mt3 import spectrograms
-from mt3 import vocabularies
+from mt3.mt3 import metrics_utils
+from mt3.mt3 import models
+from mt3.mt3 import network
+from mt3.mt3 import note_sequences
+from mt3.mt3 import preprocessors
+from mt3.mt3 import spectrograms
+from mt3.mt3 import vocabularies
 
 # from google.colab import files
 
