@@ -11,7 +11,7 @@ args_parsed = args.parse_args()
 # for youtube_id, _ in zip(utils.youtube_ids(), range(10)):
 #     print(youtube_id)
 
-with concurrent.futures.ProcessPoolExecutor(max_workers=100) as executor:
+with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
     futures = []
     for youtube_url, _ in zip(utils.youtube_ids(), range(args_parsed.max_files)):
         print(youtube_url)
