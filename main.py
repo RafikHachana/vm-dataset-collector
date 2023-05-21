@@ -4,9 +4,9 @@ import concurrent.futures
 # for youtube_id, _ in zip(utils.youtube_ids(), range(10)):
 #     print(youtube_id)
 
-with concurrent.futures.ThreadPoolExecutor() as executor:
+with concurrent.futures.ProcessPoolExecutor(max_workers=100) as executor:
     futures = []
-    for youtube_url, _ in zip(utils.youtube_ids(), range(10)):
+    for youtube_url, _ in zip(utils.youtube_ids(), range(20)):
         print(youtube_url)
         futures.append(executor.submit(utils.download_video, youtube_url=youtube_url))
         # break

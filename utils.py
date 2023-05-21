@@ -128,6 +128,12 @@ def download_video(youtube_url, output_dir="./data/videos"):
         'audioformat': 'mp3',
         'keepvideo': True,
         'remuxvideo': 'mp4',
+        'external_downloader': 'ffmpeg',
+        'external_downloader_args': {
+            "ffmpeg_i": [
+                '-ss', "0", "-to", "60"
+            ]
+        },
         "paths": {
             'home': output_dir,
             'temp': "tmp"
