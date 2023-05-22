@@ -142,14 +142,23 @@ class RemoveExtraFiles(yt_dlp.postprocessor.PostProcessor):
     def run(self, information):
         orig_path = information["filepath"]
 
-        orig_no_ext = ".".join(orig_path.split(".")[:-1])
+        # orig_no_ext = ".".join(orig_path.split(".")[:-1])
 
-        for extension in [".mp4", ".mp3", ".mid"]:
-            if os.path.exists(orig_no_ext + extension):
-                os.remove(orig_no_ext + extension)
+        video_id = os.path.basename(orig_path).split(".")[0]
 
-        # This is the extracted frames directory
-        shutil.rmtree(orig_no_ext)
+        for f in os.listdir(os.path.dirname(orig_path)):
+            if video_id in f and ("tensor" not in f or "desc" not in f):
+                if os.path.isdir(f):
+                    shutil.rmtree(f)
+                else:
+                    os.remove(f)
+
+        # for extension in [".mp4", ".mp3", ".mid"]:
+        #     if os.path.exists(orig_no_ext + extension):
+        #         os.remove(orig_no_ext + extension)
+
+        # # This is the extracted frames directory
+        # shutil.rmtree(orig_no_ext)
 
         return [], information
 
