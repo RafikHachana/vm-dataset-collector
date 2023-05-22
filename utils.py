@@ -224,7 +224,7 @@ def download_video(youtube_url, output_dir="./data/videos", tmp_path="tmp"):
         ydl.add_post_processor(yt_dlp.postprocessor.FFmpegExtractAudioPP(preferredcodec="mp3"))
         ydl.add_post_processor(TranscribeMIDI())
         ydl.add_post_processor(FigaroDescription())
-        ydl.add_post_processor(RemoveExtraFiles(output_dir=output_dir))
+        ydl.add_post_processor(RemoveExtraFiles(output_dir=output_dir), when="after_move")
         ydl.download([youtube_url])
 
 # def download_videos(urls):
