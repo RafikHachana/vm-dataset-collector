@@ -143,23 +143,35 @@ class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
         return [target_path], information
     
 class RemoveExtraFiles(yt_dlp.postprocessor.PostProcessor):
+    def __init__(self, downloader=None, output_dir=''):
+        self.output_dir = output_dir
+        super().__init__(downloader)
     def run(self, information):
         orig_path = information["filepath"]
 
-        # orig_no_ext = ".".join(orig_path.split(".")[:-1])
+        # filename = 
 
-        video_id = os.path.basename(orig_path).split(".")[0]
+        video_id = os.path.basename(".".join(orig_path.split(".")[:-1]))
 
-        for f in os.listdir(os.path.dirname(orig_path)):
-            if video_id in f and ("tensor" not in f or "desc" not in f):
-                if os.path.isdir(f):
-                    shutil.rmtree(f)
-                else:
-                    os.remove(f)
-            else:
-                if "mp4" in f:
-                    extension = orig_path.split(".")[-1]
-                    os.rename(f, os.path.join(os.path.dirname(f), f"{video_id}.{extension}"))
+        mp4_path = os.path.join(self.output_dir, f"{video_id}.mp4")
+
+        try:
+            os.remove(mp4_path)
+        except:
+            print("Could not remove the moved MP4 file")
+
+        # video_id = os.path.basename(orig_path).split(".")[0]
+
+        # for f in os.listdir(os.path.dirname(orig_path)):
+        #     if video_id in f and ("tensor" not in f or "desc" not in f):
+        #         if os.path.isdir(f):
+        #             shutil.rmtree(f)
+        #         else:
+        #             os.remove(f)
+        #     else:
+        #         if "mp4" in f:
+        #             extension = orig_path.split(".")[-1]
+        #             os.rename(f, os.path.join(os.path.dirname(f), f"{video_id}.{extension}"))
 
         # for extension in [".mp4", ".mp3", ".mid"]:
         #     if os.path.exists(orig_no_ext + extension):
@@ -210,7 +222,7 @@ def download_video(youtube_url, output_dir="./data/videos", tmp_path="tmp"):
         ydl.add_post_processor(yt_dlp.postprocessor.FFmpegExtractAudioPP(preferredcodec="mp3"))
         ydl.add_post_processor(TranscribeMIDI())
         ydl.add_post_processor(FigaroDescription())
-        # ydl.add_post_processor(RemoveExtraFiles())
+        ydl.add_post_processor(RemoveExtraFiles(output_dir=output_dir))
         ydl.download([youtube_url])
 
 # def download_videos(urls):
