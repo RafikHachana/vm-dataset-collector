@@ -10,9 +10,13 @@ import shutil
 
 midi_transcriber = get_mt3_model()
 
-def youtube_ids(file_path="data/Youtube_ID.txt"):
+def youtube_ids(file_path="data/Youtube_ID.txt", offset=0):
+    count = 0
     with open(file_path) as f:
         for line in f.readlines():
+            count += 1
+            if count <= offset:
+                continue
             youtube_id = line.strip().split("=")[-1]
             yield youtube_id
 
@@ -116,7 +120,7 @@ class TranscribeMIDI(yt_dlp.postprocessor.PostProcessor):
 
         information['filepath'] = target_path
 
-        return [target_path], information
+        return [], information
     
 class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
     def run(self, information):
@@ -206,7 +210,7 @@ def download_video(youtube_url, output_dir="./data/videos", tmp_path="tmp"):
         ydl.add_post_processor(yt_dlp.postprocessor.FFmpegExtractAudioPP(preferredcodec="mp3"))
         ydl.add_post_processor(TranscribeMIDI())
         ydl.add_post_processor(FigaroDescription())
-        ydl.add_post_processor(RemoveExtraFiles(), when="after_move")
+        ydl.add_post_processor(RemoveExtraFiles())
         ydl.download([youtube_url])
 
 # def download_videos(urls):

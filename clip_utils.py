@@ -279,4 +279,6 @@ def video_to_clip_embedding(video_path):
     target_path = orig_no_ext + ".tensor"
     torch.save(embedding, target_path)
 
+    torch.cuda.empty_cache()
+
     return target_path
