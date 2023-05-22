@@ -154,7 +154,7 @@ class RemoveExtraFiles(yt_dlp.postprocessor.PostProcessor):
         return [], information
 
 
-def download_video(youtube_url, output_dir="./data/videos"):
+def download_video(youtube_url, output_dir="./data/videos", tmp_path="tmp"):
     ydl_opts = {
         'format': 'best',
         "concurrent_fragments": 100,
@@ -170,7 +170,7 @@ def download_video(youtube_url, output_dir="./data/videos"):
         },
         "paths": {
             'home': output_dir,
-            'temp': "tmp"
+            'temp': tmp_path
             },
         "outtmpl": "%(id)s.%(ext)s",
         # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
