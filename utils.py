@@ -155,6 +155,8 @@ class RemoveExtraFiles(yt_dlp.postprocessor.PostProcessor):
 
         mp4_path = os.path.join(self.output_dir, f"{video_id}.mp4")
 
+        print("Removing", mp4_path)
+
         try:
             os.remove(mp4_path)
         except:
