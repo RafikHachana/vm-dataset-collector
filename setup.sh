@@ -27,5 +27,12 @@ pip install protobuf==3.20
 # copy checkpoints
 gsutil -q -m cp -r gs://mt3/checkpoints .
 
+# CLIP STUFF
+git clone https://github.com/RafikHachana/CLIP2Video
+pip install -r CLIP2Video/requirements.txt
+
+gdown 1PvFterPV7eMBg6RXElqaCmdpI9aHiGp_
+curl --output clip.pt https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt
+
 # copy soundfont (originally from https://sites.google.com/site/soundfonts4u)
 # gsutil -q -m cp gs://magentadata/soundfonts/SGM-v2.01-Sal-Guit-Bass-V1.3.sf2 .

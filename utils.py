@@ -4,6 +4,9 @@ Multiple utilities
 import yt_dlp
 from mt3_utils import get_mt3_model, load_audio, save_seq_to_midi
 from figaro_utils import get_description_from_midi_path
+from clip_utils import video_to_clip_embedding
+import os
+import shutil
 
 midi_transcriber = get_mt3_model()
 
@@ -80,6 +83,22 @@ def youtube_urls(file_path="data/Youtube_ID.txt"):
 #         self.to_screen('Doing stuff')
 #         return [], info
 
+class EmbedVideo(yt_dlp.postprocessor.PostProcessor):
+    def run(self, information):
+        information['ext'] = 'tensor'
+        orig_path = information['filepath']
+        # video_path = ""
+
+        target_path = video_to_clip_embedding(orig_path)
+
+        if target_path is None:
+            return [], information
+
+        # Don't do this, we want to keep using the video here
+        # information['filepath']
+
+        return [target_path], information
+
 class TranscribeMIDI(yt_dlp.postprocessor.PostProcessor):
     def run(self, information):
         information['ext'] = 'mid'
@@ -118,6 +137,21 @@ class FigaroDescription(yt_dlp.postprocessor.PostProcessor):
         information['filepath'] = target_path
 
         return [target_path], information
+    
+class RemoveExtraFiles(yt_dlp.postprocessor.PostProcessor):
+    def run(self, information):
+        orig_path = information["filepath"]
+
+        orig_no_ext = ".".join(orig_path.split(".")[:-1])
+
+        for extension in [".mp4", ".mp3", ".mid"]:
+            if os.path.exists(orig_no_ext + extension):
+                os.remove(orig_no_ext + extension)
+
+        # This is the extracted frames directory
+        shutil.rmtree(orig_no_ext)
+
+        return [], information
 
 
 def download_video(youtube_url, output_dir="./data/videos"):
@@ -140,10 +174,10 @@ def download_video(youtube_url, output_dir="./data/videos"):
             },
         "outtmpl": "%(id)s.%(ext)s",
         # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
-        'postprocessors': [{  # Extract audio using ffmpeg
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-        }]
+        # 'postprocessors': [{  # Extract audio using ffmpeg
+        #     'key': 'FFmpegExtractAudio',
+        #     'preferredcodec': 'mp3',
+        # }]
         #  'postprocessors': [{  # Extract audio using ffmpeg
         #     'key': 'FFmpegVideoRemuxer',
         #     'preferedformat': 'mp4',
@@ -155,8 +189,11 @@ def download_video(youtube_url, output_dir="./data/videos"):
     }
     print(ydl_opts)
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.add_post_processor(EmbedVideo())
+        ydl.add_post_processor(yt_dlp.postprocessor.FFmpegExtractAudioPP(preferredcodec="mp3"))
         ydl.add_post_processor(TranscribeMIDI())
         ydl.add_post_processor(FigaroDescription())
+        ydl.add_post_processor(RemoveExtraFiles(), when="after_move")
         ydl.download([youtube_url])
 
 # def download_videos(urls):
