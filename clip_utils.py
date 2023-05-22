@@ -7,7 +7,7 @@ import sys
 sys.path.append('CLIP2Video')
 from modules.tokenization_clip import SimpleTokenizer as ClipTokenizer
 from modules.modeling import CLIP2Video
-from evaluation.eval import eval_epoch
+# from evaluation.eval import eval_epoch
 
 checkpoint = "https://drive.google.com/drive/folders/1LKMUZFf9EAxFbGShlA22eUCeGKC8DWx4?usp=sharing"
 model_num = "2"
