@@ -152,6 +152,10 @@ class RemoveExtraFiles(yt_dlp.postprocessor.PostProcessor):
                     shutil.rmtree(f)
                 else:
                     os.remove(f)
+            else:
+                if "mp4" in f:
+                    extension = orig_path.split(".")[-1]
+                    os.rename(f, os.path.join(os.path.dirname(f), f"{video_id}.{extension}"))
 
         # for extension in [".mp4", ".mp3", ".mid"]:
         #     if os.path.exists(orig_no_ext + extension):
