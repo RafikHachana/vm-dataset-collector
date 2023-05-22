@@ -9,16 +9,16 @@ from modules.tokenization_clip import SimpleTokenizer as ClipTokenizer
 from modules.modeling import CLIP2Video
 # from evaluation.eval import eval_epoch
 
-checkpoint = "https://drive.google.com/drive/folders/1LKMUZFf9EAxFbGShlA22eUCeGKC8DWx4?usp=sharing"
+# checkpoint = "https://drive.google.com/drive/folders/1LKMUZFf9EAxFbGShlA22eUCeGKC8DWx4?usp=sharing"
 model_num = "2"
-checkpoint ="/content/"
+checkpoint ="/content/vm-dataset-collector/"
 cross_model = "cross-base"
 from dataclasses import dataclass
 
 @dataclass
 class TaskConfig:
   random_thing: str = ""
-  clip_path: str = "/content/clip.pt"
+  clip_path: str = "/content/vm-dataset-collector/clip.pt"
   temporal_type: str = "TDB"
   sim_type: str = "seqTransf"
   center_type: str = "TAB"
