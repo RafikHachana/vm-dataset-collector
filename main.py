@@ -17,7 +17,10 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
     futures = []
     for youtube_url, _ in zip(utils.youtube_ids(offset=args_parsed.offset), range(args_parsed.max_files)):
         print(youtube_url)
-        futures.append(executor.submit(utils.download_video, youtube_url=youtube_url, output_dir=args_parsed.output_dir, tmp_path=args_parsed.tmp_path))
+        try:
+            futures.append(executor.submit(utils.download_video, youtube_url=youtube_url, output_dir=args_parsed.output_dir, tmp_path=args_parsed.tmp_path))
+        except:
+            pass
         # break
 
     for future in concurrent.futures.as_completed(futures):
