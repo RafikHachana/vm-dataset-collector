@@ -85,7 +85,7 @@ def youtube_urls(file_path="data/Youtube_ID.txt"):
 
 class EmbedVideo(yt_dlp.postprocessor.PostProcessor):
     def run(self, information):
-        information['ext'] = 'tensor'
+        # information['ext'] = 'tensor'
         orig_path = information['filepath']
         # video_path = ""
 
