@@ -267,7 +267,7 @@ def video_to_clip_embedding(video_path):
    
     extracted_frames_dir = extract_frames_from_videos(video_path, extracted_dir)
 
-    video_data = load_frames(extracted_frames_dir)
+    video_data = load_frames(extracted_frames_dir[0])
 
     embedding = clip_embedding(video_data["video"])
 
